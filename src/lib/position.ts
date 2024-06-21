@@ -3,7 +3,7 @@ const numerals = ['1', '2', '3', '4', '5', '6', '7', '8'] as const
 const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] as const
 
 // Define Rows and Columns as the union of the respective arrays
-export const rows = numerals
+export const rows = numerals.toReversed()
 export const cols = letters
 export type Row = (typeof rows)[number]
 export type Column = (typeof cols)[number]
