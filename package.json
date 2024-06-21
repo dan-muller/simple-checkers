@@ -3,24 +3,40 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.4"
+    "@libsql/client": "^0.6.2",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "@vercel/otel": "^1.8.4",
+    "babel-plugin-react-compiler": "latest",
+    "clsx": "^2.1.1",
+    "dotenv-flow": "^4.1.0",
+    "drizzle-orm": "^0.31.2",
+    "lucide-react": "^0.395.0",
+    "next": "rc",
+    "react": "rc",
+    "react-dom": "rc",
+    "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@types/crypto-js": "^4.2.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
+    "drizzle-kit": "^0.22.7",
     "eslint": "^8",
-    "eslint-config-next": "14.2.4"
-  }
+    "eslint-config-next": "rc",
+    "eslint-plugin-react-compiler": "latest",
+    "postcss": "^8",
+    "postcss-load-config": "^6.0.1",
+    "prettier": "^3.3.2",
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "tailwindcss": "^3.4.4",
+    "typescript": "rc"
+  },
+  "packageManager": "pnpm@9.1.4+sha512.9df9cf27c91715646c7d675d1c9c8e41f6fce88246f1318c1aa6a1ed1aeb3c4f032fcdf4ba63cc69c4fe6d634279176b5358727d8f2cc1e65b65f43ce2f8bfb0"
 }
