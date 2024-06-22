@@ -1,24 +1,22 @@
 import Link from 'next/link'
 import { Circle } from 'lucide-react'
-import { ComponentProps, FC, PropsWithChildren } from 'react'
+import { ComponentProps, PropsWithChildren, JSX } from 'react'
 import { cn } from '~/lib/utils'
 import {
-    PlayerPiece,
+    AvailableMoves,
     cols,
     GameHistory,
+    indexFromPosition,
     Player,
+    PlayerPiece,
     Position,
     rows,
     toPosition,
-    indexFromPosition,
-    AnyGameHistory,
-    MoveType,
-    AvailableMoves,
 } from '~/lib/game/common'
 import { db } from '~/database'
 import { notFound } from 'next/navigation'
 
-const ButtonLink = ({
+const ButtonLink = <TComponent = 'button',>({
     children,
     ...props
 }: ComponentProps<'button'> &
@@ -32,10 +30,8 @@ const ButtonLink = ({
         <button {...props}>{children}</button>
     )
 
-type FCWC<P = any> = FC<PropsWithChildren<P>>
-
-const ColHeader: FCWC = ({ children }) => <div className="content-center text-center">{children}</div>
-const RowHeader: FCWC = ({ children }) => <div className="content-center text-center">{children}</div>
+const ColHeader = ({ children }: PropsWithChildren) => <div className="content-center text-center">{children}</div>
+const RowHeader = ({ children }: PropsWithChildren) => <div className="content-center text-center">{children}</div>
 
 function Header(props: { currentPlayer: Player }) {
     return (
@@ -54,33 +50,6 @@ function Header(props: { currentPlayer: Player }) {
     )
 }
 
-function ATile(
-    props: PropsWithChildren<{
-        gameId: string
-        state: PlayerPiece | undefined
-        position: Position
-        isActive?: boolean
-        isAvailable?: boolean
-        currentPlayer: Player
-    }>,
-) {
-    // (activePosition && activePosition !== position && availableMoves && !availableMoves.has(position)) ||
-    // state?.player !== currentPlayer
-    const content = <></>
-    return (
-        <ButtonLink
-            href={props.isActive ? `/game/${props.gameId}` : `/game/${props.gameId}?activePosition=${props.position}`}
-            key={`${props.position}`}
-            className={cn(
-                'flex h-full w-full items-center justify-center hover:enabled:bg-blue-500',
-                props.isActive ? 'enabled:bg-blue-300' : 'enabled:bg-blue-400',
-            )}
-            disabled={!props.isActive && !props.isAvailable}
-        >
-            {content}
-        </ButtonLink>
-    )
-}
 function Tile({
     state,
     activePosition,
@@ -122,6 +91,7 @@ function Tile({
         </ButtonLink>
     )
 }
+
 function Piece({ piece, player }: PlayerPiece) {
     return (
         <Circle
@@ -222,16 +192,6 @@ const getGameData = async (gameId: string) => {
     })
     return { board, history }
 }
-// content: (
-//     <Circle
-//         size={48}
-//         className={cn(
-//             'rounded-full',
-//             move.player === 'black' && 'fill-neutral-500 stroke-neutral-700',
-//             move.player === 'red' && 'fill-red-500 stroke-red-600',
-//         )}
-//     />
-// ),
 
 export default async function Home(props: any) {
     const searchParams = new URLSearchParams(props?.searchParams)
@@ -243,16 +203,7 @@ export default async function Home(props: any) {
     const availableMoves: AvailableMoves | undefined = activePosition
         ? new Map([
               ['c7', 'move'],
-              // ['c6', 'move'],
-              // ['c5', 'move'],
               ['g7', 'capture'],
-              // { position: 'c7', type: 'move' },
-              // { position: 'c6', type: 'move' },
-              // { position: 'c5', type: 'move' },
-              // { position: 'c4', type: 'move' },
-              // { position: 'c3', type: 'move' },
-              // { position: 'c2', type: 'move' },
-              // { position: 'c1', type: 'move' },
           ])
         : undefined
     return (
