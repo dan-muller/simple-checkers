@@ -1,3 +1,5 @@
+import { db } from '~/database'
+
 // Keep the definitions or numerals and letters separate from rows and cols so that it is easier to change the orientation of the board
 const numerals = ['1', '2', '3', '4', '5', '6', '7', '8'] as const
 const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] as const
@@ -21,3 +23,17 @@ export const indexFromPosition = (position: Position): [col: number, row: number
     const [col, row] = splitFromPosition(position)
     return [cols.indexOf(col), rows.indexOf(row)]
 }
+
+export type Player = 'red' | 'black'
+export type PieceType = 'pawn' | 'king'
+
+type GameHistoryDefinition = {
+    init: { player: Player; piece: PieceType; to: Position }
+    move: { from: Position; to: Position }
+}
+export type GameHistoryType = keyof GameHistoryDefinition
+export type GameHistory<TType extends GameHistoryType = GameHistoryType> = GameHistoryDefinition[TType] & {
+    type: TType
+}
+
+export type PieceState = { player: Player; piece: PieceType }

@@ -1,20 +1,14 @@
+import * as schema from './schema'
+import { LibSQLDatabase } from 'drizzle-orm/libsql'
 import { config } from 'dotenv-flow'
-import { createClient } from '@libsql/client'
-import { drizzle } from 'drizzle-orm/libsql'
 import { env } from '~/lib/utils'
-import { migrate } from 'drizzle-orm/libsql/migrator'
+import { initDb } from '~/database/util'
 
-config({ purge_dotenv: true })
+config()
 
-const client = createClient({
+export const db = initDb({
     url: env(String, 'TURSO_CONNECTION_URL'),
     authToken: env(String, 'TURSO_AUTH_TOKEN'),
 })
 
-export const db = drizzle(client)
-
-export type Database = typeof db
-
-export const runMigrations = async (dir: string) => {
-    return migrate(db, { migrationsFolder: dir })
-}
+export type Database = LibSQLDatabase<typeof schema>

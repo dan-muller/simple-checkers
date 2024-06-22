@@ -1,7 +1,5 @@
-import { registerOTel } from '@vercel/otel'
-import { env } from '~/lib/utils'
-import { runMigrations } from '~/database/drizzle'
+import { config } from 'dotenv-flow'
 
-export function register() {
-    registerOTel()
-}
+config()
+
+export function register() {}

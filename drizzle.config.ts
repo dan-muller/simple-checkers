@@ -5,7 +5,7 @@ import { env } from '~/lib/utils'
 config({ purge_dotenv: true })
 
 export default defineConfig({
-    schema: './schema.ts',
+    schema: './src/database/schema.ts',
     dialect: 'sqlite',
     driver: 'turso',
     dbCredentials: {
@@ -13,5 +13,4 @@ export default defineConfig({
         authToken: env(String, 'TURSO_AUTH_TOKEN'),
     },
     verbose: true,
-    strict: true,
 })

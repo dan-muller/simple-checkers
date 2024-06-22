@@ -1,6 +1,9 @@
 import '~/app/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { config } from 'dotenv-flow'
+
+config()
 
 const inter = Inter({ subsets: ['latin'] })
 
