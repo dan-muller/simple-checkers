@@ -3,7 +3,7 @@ import { Circle } from 'lucide-react'
 import { ComponentProps, FC, PropsWithChildren } from 'react'
 import { cn } from '~/lib/utils'
 import {
-    PieceState,
+    PlayerPiece,
     cols,
     GameHistory,
     Player,
@@ -12,6 +12,8 @@ import {
     toPosition,
     indexFromPosition,
     AnyGameHistory,
+    MoveType,
+    AvailableMoves,
 } from '~/lib/game/common'
 import { db } from '~/database'
 import { notFound } from 'next/navigation'
@@ -55,7 +57,7 @@ function Header(props: { currentPlayer: Player }) {
 function ATile(
     props: PropsWithChildren<{
         gameId: string
-        state: PieceState | undefined
+        state: PlayerPiece | undefined
         position: Position
         isActive?: boolean
         isAvailable?: boolean
@@ -91,8 +93,8 @@ function Tile({
     position: Position
     href: string
     currentPlayer: Player
-    state: PieceState | undefined
-    availableMoves?: Set<Position>
+    state: PlayerPiece | undefined
+    availableMoves?: AvailableMoves
     activePosition?: Position
 }>) {
     const [iCol, iRow] = indexFromPosition(position)
@@ -110,14 +112,17 @@ function Tile({
                     ? state?.player === currentPlayer && 'enabled:bg-blue-400'
                     : 'enabled:bg-blue-400',
                 availableMoves?.has(position) && 'enabled:bg-green-300',
-                availableMoves?.has(position) && state?.player !== currentPlayer && 'enabled:bg-red-300',
+                availableMoves?.has(position) &&
+                    state?.player &&
+                    state?.player !== currentPlayer &&
+                    'enabled:bg-red-300',
             )}
         >
             {children}
         </ButtonLink>
     )
 }
-function Piece({ piece, player }: PieceState) {
+function Piece({ piece, player }: PlayerPiece) {
     return (
         <Circle
             size={48}
@@ -139,9 +144,9 @@ function Board({
 }: {
     activePosition: Position | undefined
     gameId: string
-    board: Map<Position, PieceState>
+    board: Map<Position, PlayerPiece>
     history: GameHistory[]
-    availableMoves?: Set<Position>
+    availableMoves?: AvailableMoves
 }) {
     const currentPlayer = history.length % 2 === 0 ? 'red' : 'black'
     const setActivePosition = (position: Position) => {
@@ -171,10 +176,6 @@ function Board({
                                     currentPlayer={currentPlayer}
                                     availableMoves={availableMoves}
                                     activePosition={activePosition}
-                                    // isActive={activePosition === position}
-                                    // isAvailable={availableMoves?.has(position) ?? false}
-                                    // highlightAvailable={!activePosition && activePosition !== position}
-                                    // isThreat={!!state?.player && state?.player !== currentPlayer}
                                 >
                                     {state ? <Piece {...state} /> : null}
                                 </Tile>
@@ -186,36 +187,6 @@ function Board({
         </main>
     )
 }
-
-// (
-//     <>
-//         {iCol === 0 ? <RowHeader key={row}>{row}</RowHeader> : null}
-//         <div
-//             key={`${row}${col}`}
-//             className={cn(
-//                 'flex h-full w-full items-center justify-center hover:enabled:bg-blue-500',
-//                 !availableMoves?.has(position)
-//                     ? {
-//                         'bg-amber-200': (iCol + iRow) % 2 === 0,
-//                         'bg-amber-500': (iCol + iRow) % 2 !== 0,
-//                     }
-//                     : {
-//                         'bg-green-200': (iCol + iRow) % 2 === 0,
-//                         'bg-green-500': (iCol + iRow) % 2 !== 0,
-//                     },
-//             )}
-//         >
-//             <Tile
-//                 gameId={gameId}
-//                 position={position}
-//                 currentPlayer={currentPlayer}
-//                 state={state}
-//                 isActive={activePosition === position}
-//                 isAvailable={availableMoves?.has(position)}
-//             />
-//         </div>
-//     </>
-// )
 
 const piece = (player: Player = 'red', type: 'pawn' | 'rook' | 'knight' | 'bishop' | 'queen' | 'king' = 'pawn') => ({
     player,
@@ -244,7 +215,7 @@ const getGameData = async (gameId: string) => {
     }))
     const init = history.filter((move) => move.type === 'init') as GameHistory<'init'>[]
     const moves = history.filter((move) => move.type === 'move') as GameHistory<'move'>[]
-    const board = new Map<Position, PieceState>(init.map((move) => [move.to as Position, move]))
+    const board = new Map<Position, PlayerPiece>(init.map((move) => [move.to as Position, move]))
     moves.forEach((move) => {
         board.set(move.to as Position, board.get(move.from as Position)!)
         board.delete(move.from as Position)
@@ -261,6 +232,7 @@ const getGameData = async (gameId: string) => {
 //         )}
 //     />
 // ),
+
 export default async function Home(props: any) {
     const searchParams = new URLSearchParams(props?.searchParams)
     const activePosition = searchParams.get('activePosition') as Position | undefined
@@ -268,7 +240,21 @@ export default async function Home(props: any) {
     if (!gameId) return notFound()
     const data = await getGameData(gameId)
     if (!data) return notFound()
-    const availableMoves = activePosition ? new Set<Position>(['g7']) : undefined
+    const availableMoves: AvailableMoves | undefined = activePosition
+        ? new Map([
+              ['c7', 'move'],
+              // ['c6', 'move'],
+              // ['c5', 'move'],
+              ['g7', 'capture'],
+              // { position: 'c7', type: 'move' },
+              // { position: 'c6', type: 'move' },
+              // { position: 'c5', type: 'move' },
+              // { position: 'c4', type: 'move' },
+              // { position: 'c3', type: 'move' },
+              // { position: 'c2', type: 'move' },
+              // { position: 'c1', type: 'move' },
+          ])
+        : undefined
     return (
         <Board
             board={data.board}

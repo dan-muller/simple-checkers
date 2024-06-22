@@ -30,10 +30,14 @@ export type PieceType = 'pawn' | 'king'
 type GameHistoryDefinition = {
     init: { player: Player; piece: PieceType; to: Position }
     move: { from: Position; to: Position }
+    capture: { from: Position; to: Position }
 }
 export type GameHistoryType = keyof GameHistoryDefinition
 export type GameHistory<TType extends GameHistoryType = GameHistoryType> = GameHistoryDefinition[TType] & {
     type: TType
 }
 
-export type PieceState = { player: Player; piece: PieceType }
+export type AvailableMoves = Map<Position, MoveType>
+export type MoveType = Extract<GameHistoryType, 'move' | 'capture'>
+
+export type PlayerPiece = { player: Player; piece: PieceType }
