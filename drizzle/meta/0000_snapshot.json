@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "ad9cd0e8-9136-4d3c-98bd-74f7f41f65b1",
+  "id": "d8c47e77-a608-4bfa-97cc-9031b9738fe2",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "game": {
@@ -94,6 +94,14 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "active": {
+          "name": "active",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": true
         }
       },
       "indexes": {
@@ -108,6 +116,20 @@
           "name": "history_piece_idx",
           "columns": [
             "piece_id"
+          ],
+          "isUnique": false
+        },
+        "history_from_idx": {
+          "name": "history_from_idx",
+          "columns": [
+            "from"
+          ],
+          "isUnique": false
+        },
+        "history_to_idx": {
+          "name": "history_to_idx",
+          "columns": [
+            "to"
           ],
           "isUnique": false
         }

@@ -11,8 +11,22 @@ export type Row = (typeof rows)[number]
 export type Column = (typeof cols)[number]
 export type Position = `${Column}${Row}`
 
-export const toPosition = (...[col, row]: [col: number, row: number] | [col: Column, row: Row]): Position =>
-    typeof col === 'number' ? `${cols[col]}${rows[row]}` : (`${col}${row}` as Position)
+type ToPositionArgs = [col: number, row: number] | [col: Column, row: Row]
+export const toPosition = (...[col, row]: ToPositionArgs): Position | undefined => {
+    if (
+        typeof col === 'number' &&
+        col >= 0 &&
+        col < cols.length &&
+        typeof row === 'number' &&
+        row >= 0 &&
+        row < rows.length
+    ) {
+        return `${cols[col]}${rows[row]}` as Position
+    } else if (typeof col === 'string' && cols.includes(col) && typeof row === 'string' && rows.includes(row)) {
+        return `${col}${row}` as Position
+    }
+    return undefined
+}
 
 export const splitFromPosition = (position: Position): [col: Column, row: Row] => [
     position[0] as Column,
@@ -27,10 +41,14 @@ export const indexFromPosition = (position: Position): [col: number, row: number
 export type Player = 'red' | 'black'
 export type PieceType = 'pawn' | 'king'
 
+type GameHistoryBase = {
+    gameId: string
+    pieceId: string
+}
 type GameHistoryDefinition = {
-    init: { player: Player; piece: PieceType; to: Position }
-    move: { from: Position; to: Position }
-    capture: { from: Position; to: Position }
+    init: GameHistoryBase & { player: Player; piece: PieceType; to: Position }
+    move: GameHistoryBase & { player: Player; from: Position; to: Position }
+    capture: GameHistoryBase & { player: Player; from: Position; to: Position }
 }
 export type GameHistoryType = keyof GameHistoryDefinition
 export type GameHistory<TType extends GameHistoryType = GameHistoryType> = GameHistoryDefinition[TType] & {
@@ -40,4 +58,4 @@ export type GameHistory<TType extends GameHistoryType = GameHistoryType> = GameH
 export type AvailableMoves = Map<Position, MoveType>
 export type MoveType = Extract<GameHistoryType, 'move' | 'capture'>
 
-export type PlayerPiece = { player: Player; piece: PieceType }
+export type PlayerPiece = { player: Player; piece: PieceType; pieceId: string }

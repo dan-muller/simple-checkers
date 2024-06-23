@@ -1,5 +1,5 @@
 import { relations, sql } from 'drizzle-orm'
-import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { index, integer, sqliteTable, text, unique } from 'drizzle-orm/sqlite-core'
 import { createId } from '@paralleldrive/cuid2'
 
 import type { GameHistoryType, PieceType, Player, Position } from '~/lib/game'
@@ -20,6 +20,7 @@ export const player = sqliteTable('player', {
     updatedAt: updateAt(),
 })
 const playerIdRef = (name: string) => text(name).references(() => player.id, { onDelete: 'cascade' })
+export const playerRelations = relations(player, ({ many }) => ({}))
 
 export const game = sqliteTable('game', {
     id: id('game_id'),
@@ -29,7 +30,6 @@ export const game = sqliteTable('game', {
 export const gameRelations = relations(game, ({ many }) => ({
     pieces: many(piece),
     history: many(history),
-    players: many(player),
 }))
 const gameIdRef = (name: string) => text(name).references(() => game.id, { onDelete: 'cascade' })
 
@@ -71,10 +71,13 @@ export const history = sqliteTable(
         from: position('from'),
         to: position('to').notNull(),
         type: text('type').notNull().$type<GameHistoryType>(),
+        active: integer('active', { mode: 'boolean' }).default(true),
     },
     (table) => ({
         gameIdx: index('history_game_idx').on(table.gameId),
         pieceIdx: index('history_piece_idx').on(table.pieceId),
+        fromIdx: index('history_from_idx').on(table.from),
+        toIdx: index('history_to_idx').on(table.to),
     }),
 )
 export const historyRelations = relations(history, ({ one }) => ({

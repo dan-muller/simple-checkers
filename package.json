@@ -23,7 +23,8 @@
         "next": "rc",
         "react": "rc",
         "react-dom": "rc",
-        "tailwind-merge": "^2.3.0"
+        "tailwind-merge": "^2.3.0",
+        "ts-pattern": "^5.2.0"
     },
     "devDependencies": {
         "@types/crypto-js": "^4.2.2",

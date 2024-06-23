@@ -13,6 +13,7 @@ CREATE TABLE `history` (
 	`from` text,
 	`to` text NOT NULL,
 	`type` text NOT NULL,
+	`active` integer DEFAULT true,
 	FOREIGN KEY (`game_id`) REFERENCES `game`(`game_id`) ON UPDATE no action ON DELETE cascade,
 	FOREIGN KEY (`piece_id`) REFERENCES `piece`(`piece_id`) ON UPDATE no action ON DELETE cascade
 );
@@ -36,5 +37,7 @@ CREATE TABLE `player` (
 --> statement-breakpoint
 CREATE INDEX `history_game_idx` ON `history` (`game_id`);--> statement-breakpoint
 CREATE INDEX `history_piece_idx` ON `history` (`piece_id`);--> statement-breakpoint
+CREATE INDEX `history_from_idx` ON `history` (`from`);--> statement-breakpoint
+CREATE INDEX `history_to_idx` ON `history` (`to`);--> statement-breakpoint
 CREATE INDEX `piece_game_idx` ON `piece` (`game_id`);--> statement-breakpoint
 CREATE INDEX `piece_player_idx` ON `piece` (`player_id`);
