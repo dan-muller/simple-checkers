@@ -18,7 +18,7 @@ const RowHeader = ({ children }: PropsWithChildren) => <div className={headerCla
 export function Board() {
   return (
     <main className={cn('min-w-[500px] max-w-4xl')}>
-      <div className={cn('grid grid-cols-checkerboard grid-rows-checkerboard aspect-square font-semibold capitalize')}>
+      <div className={cn('grid aspect-square grid-cols-checkerboard grid-rows-checkerboard font-semibold capitalize')}>
         <div></div>
         {cols.map((col) => (
           <ColHeader key={col}>{col}</ColHeader>
@@ -28,12 +28,12 @@ export function Board() {
             {iCol === 0 ? <RowHeader key={row}>{row}</RowHeader> : null}
             <div
               className={cn(
-                'h-full w-full bg-opacity-60 border-tile-dark border-2',
+                'aspect-square h-full w-full border-2 border-tile-dark bg-opacity-60',
                 (iCol + iRow) % 2 === 0 ? 'bg-tile-light' : 'bg-tile-dark',
                 iCol === 0 && iRow === 0 && 'rounded-tl-xl',
                 iCol === 0 && iRow === 7 && 'rounded-bl-xl',
                 iCol === 7 && iRow === 0 && 'rounded-tr-xl',
-                iCol === 7 && iRow === 7 && 'rounded-br-xl'
+                iCol === 7 && iRow === 7 && 'rounded-br-xl',
               )}
             >
               <Tile position={position}>
