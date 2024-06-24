@@ -12,6 +12,7 @@
     "dependencies": {
         "@paralleldrive/cuid2": "latest",
         "babel-plugin-react-compiler": "latest",
+        "class-variance-authority": "^0.7.0",
         "clsx": "latest",
         "jotai": "^2.8.3",
         "lucide-react": "latest",
@@ -25,6 +26,7 @@
         "ts-pattern": "latest"
     },
     "devDependencies": {
+        "@tailwindcss/forms": "^0.5.7",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
@@ -32,8 +34,8 @@
         "eslint-config-next": "rc",
         "eslint-plugin-react-compiler": "latest",
         "postcss": "^8",
-        "prettier": "^3.3.2",
-        "prettier-plugin-tailwindcss": "^0.6.5",
+        "prettier": "latest",
+        "prettier-plugin-tailwindcss": "latest",
         "tailwindcss": "^3.4.4",
         "typescript": "^5.5.2"
     },

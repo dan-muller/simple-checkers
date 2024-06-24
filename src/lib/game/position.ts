@@ -36,7 +36,7 @@ export type Column = (typeof cols)[number];
 export type Position = `${Column}${Row}`;
 
 // All possible positions on the board
-export const positions: Position[] = cols.flatMap((col) => rows.map((row) => `${col}${row}` as Position));
+export const positions: Position[] = rows.flatMap((row) => cols.map((col) => `${col}${row}` as Position));
 
 /**
  * =============================================================================
@@ -78,9 +78,6 @@ export const fromPosition = (position: Position) => {
   const split = [position[0] as Column, position[1] as Row] as const;
   return Object.assign(split, {
     // Convert the position to a column index and row index
-    toIndex: () => {
-      const [col, row] = split;
-      return [cols.indexOf(col), rows.indexOf(row)];
-    },
+    toIndex: () => [cols.indexOf(split[0]), rows.indexOf(split[1])] as const,
   });
 };
