@@ -3,51 +3,54 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
 
-  --color-tile-dark: 21.37deg 100% 68.63%;
-  --color-tile-light: 27.32deg 100% 75.88%;
-  --board-bg-url: url('https://images.unsplash.com/photo-1610296669228-602fa827fc1f?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    --color-player-red-100: 0deg 84% 60%;
+    --color-player-red-200: 0deg 84% 40%;
 
-  .theme-dark {
-    --color-tile-dark: 0deg 31% 7%;
-  }
+    --color-player-black-100: 0deg 0% 20%;
+    --color-player-black-200: 0deg 0% 0%;
 
-  .theme-oceanic {
-    --color-tile-dark: 203.39deg 100% 23.14%;
-    --color-tile-light: 206.38deg 48.74% 53.33%;
-    /*--board-bg-url: url('https://images.unsplash.com/photo-1484291470158-b8f8d608850d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');*/
-  }
+    --color-tile-dark: 0deg 0% 65%;
+    --color-tile-light: 0deg 0% 85%;
 
-  .theme-berry {
-    --color-tile-dark: 268.85deg 59.09% 82.75%;
-    --color-tile-light: 240deg 25.88% 33.33%;
-    --board-bg-url: url('https://images.unsplash.com/photo-1594002348772-bc0cb57ade8b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-  }
+    .theme-dark {
+        --color-tile-dark: 0deg 5% 15%;
+        --color-tile-light: 0deg 5% 35%;
+    }
+
+    .theme-oceanic {
+        --color-tile-dark: 203.39deg 100% 23.14%;
+        --color-tile-light: 206.38deg 48.74% 53.33%;
+    }
+
+    .theme-berry {
+        --color-tile-dark: 240deg 25.88% 33.33%;
+        --color-tile-light: 268.85deg 59.09% 82.75%;
+    }
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+            to bottom,
+            transparent,
+            rgb(var(--background-end-rgb))
+    ) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 }

@@ -10,10 +10,10 @@ const config: Config = {
     colors: {
       'tile-light': 'hsl(var(--color-tile-light) / <alpha-value>)',
       'tile-dark': 'hsl(var(--color-tile-dark) / <alpha-value>)',
-      'player-red-100': '#ef4444',
-      'player-red-200': '#dc2626',
-      'player-black-100': '#525252',
-      'player-black-200': '#404040',
+      'player-red-100': 'hsl(var(--color-player-red-100) / <alpha-value>)',
+      'player-red-200': 'hsl(var(--color-player-red-200) / <alpha-value>)',
+      'player-black-100': 'hsl(var(--color-player-black-100) / <alpha-value>)',
+      'player-black-200': 'hsl(var(--color-player-black-200) / <alpha-value>)',
     },
     extend: {
       backgroundImage: {

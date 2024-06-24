@@ -17,7 +17,7 @@ export function Piece({ position }: Readonly<{ position: Position }>) {
         state?.color === 'red' && 'text-player-red-200',
         state?.color === 'black' && 'text-player-black-100',
         state?.piece === 'peon' && 'text-7xl',
-        state?.piece === 'dame' && 'text-5xl'
+        state?.piece === 'dame' && 'text-5xl',
       )}
     >
       {state ? pieces[state.piece] : null}
