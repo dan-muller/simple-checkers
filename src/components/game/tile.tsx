@@ -40,10 +40,7 @@ const TileAvailableMove = ({ children, position }: PropsWithChildren<InternalTil
   const [selectedPosition, setSelectedPosition] = useSelectedPosition();
   const [, addMove] = useHistory();
   const availableMoves = useAvailableMoves(position);
-  const move =
-    selectedPosition &&
-    !availableMoves.get(selectedPosition)?.some((m) => m.type === 'capture') &&
-    availableMoves.get(selectedPosition)?.find((m) => m.to === position);
+  const move = selectedPosition && availableMoves.get(selectedPosition)?.find((m) => m.to === position);
   const onTileClick = () => move && addMove(move);
   return (
     <button

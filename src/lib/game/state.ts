@@ -164,6 +164,7 @@ const pieceConfig = {
 export const availableMovesAtom = atom<Map<Position, Move[]>>((get) => {
   const board = get(boardAtom);
   const moves = new Map<Position, Move[]>();
+  const canCapture = new Map<Player, boolean>();
   for (const [position, { piece, player }] of board) {
     const config = pieceConfig[piece];
     const availableMoves: Move[] = [];
@@ -176,16 +177,27 @@ export const availableMovesAtom = atom<Map<Position, Move[]>>((get) => {
       if (!to || !isValidPosition(to)) continue;
       const target = board.get(to);
       if (target && target.player !== player) {
-        const landingPos = config.captures === 'hop' ? toPosition(iCol + dCol * 2, iRow + dRow * 2) : to;
-        if (!landingPos || !isValidPosition(landingPos)) continue;
-        const landing = board.get(landingPos);
-        if (!!landing) continue;
-        availableMoves.push({ player, type: 'capture', from: position, to: landingPos, target: to, piece });
+        const destinationPosition = config.captures === 'hop' ? toPosition(iCol + dCol * 2, iRow + dRow * 2) : to;
+        if (!destinationPosition || !isValidPosition(destinationPosition)) continue;
+        const destinationCell = board.get(destinationPosition);
+        if (!!destinationCell) continue;
+        availableMoves.push({ player, type: 'capture', from: position, to: destinationPosition, target: to, piece });
+        canCapture.set(player, true);
       } else if (!target) {
         availableMoves.push({ player, type: 'move', from: position, to, piece });
       }
     }
     moves.set(position, availableMoves);
+  }
+  for (const [position, availableMoves] of moves) {
+    const player = board.get(position)?.player;
+    const playerCanCapture = player && canCapture.get(player);
+    if (playerCanCapture || availableMoves.some((move) => move.type === 'capture')) {
+      moves.set(
+        position,
+        availableMoves.filter((move) => move.type === 'capture'),
+      );
+    }
   }
   return moves;
 });
