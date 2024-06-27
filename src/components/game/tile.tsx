@@ -11,6 +11,11 @@ import {
   useHistory,
   useSelectedPosition,
 } from '~/components/game/state';
+import { isPromotion } from '~/lib/game/state';
+
+function Promotion() {
+  return <div className="text-6xl opacity-40">♔</div>;
+}
 
 type InternalTileProps = {
   position: Position;
@@ -48,7 +53,7 @@ const TileAvailableMove = ({ children, position }: PropsWithChildren<InternalTil
       onClick={onTileClick}
       disabled={!move}
     >
-      <Basic>{children}</Basic>
+      <Basic>{isPromotion(move) ? <Promotion /> : children}</Basic>
     </button>
   );
 };
@@ -65,7 +70,7 @@ const TileAvailableCapture = ({ children, position }: PropsWithChildren<Internal
       onClick={onTileClick}
       disabled={!move}
     >
-      <Basic>{children}</Basic>
+      <Basic>{isPromotion(move) ? <Promotion /> : children}</Basic>
     </button>
   );
 };

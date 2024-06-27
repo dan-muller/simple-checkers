@@ -202,6 +202,12 @@ export const availableMovesAtom = atom<Map<Position, Move[]>>((get) => {
   return moves;
 });
 
+export function isPromotion(move?: Move | null | undefined) {
+  return (
+    move && playerConfig[move.player].promotionColumn === fromPosition(move.to)[0] && pieceConfig[move.piece].promotion
+  );
+}
+
 if (process.env.NODE_ENV !== 'production') {
   historyValueAtom.debugLabel = 'historyValue';
   historyAtom.debugLabel = 'history';
