@@ -27,6 +27,7 @@ export function Board() {
           <>
             {iCol === 0 ? <RowHeader key={row}>{row}</RowHeader> : null}
             <div
+              key={position}
               className={cn(
                 'aspect-square h-full w-full border-2 border-tile-dark bg-opacity-60',
                 (iCol + iRow) % 2 === 0 ? 'bg-tile-light' : 'bg-tile-dark',

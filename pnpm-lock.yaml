@@ -76,10 +76,10 @@ importers:
         specifier: ^8
         version: 8.4.38
       prettier:
-        specifier: latest
+        specifier: ^3.3.2
         version: 3.3.2
       prettier-plugin-tailwindcss:
-        specifier: latest
+        specifier: ^0.6.5
         version: 0.6.5(prettier@3.3.2)
       tailwindcss:
         specifier: ^3.4.4

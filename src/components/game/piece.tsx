@@ -1,6 +1,8 @@
+'use client';
+
 import { Position } from '~/lib/game/position';
-import { getBoard } from '~/lib/game/board';
 import { cn } from '~/lib/utils';
+import { useCellState } from '~/components/game/state';
 
 const pieces = {
   peon: '●',
@@ -8,14 +10,13 @@ const pieces = {
 };
 
 export function Piece({ position }: Readonly<{ position: Position }>) {
-  const board = getBoard();
-  const state = board.get(position);
+  const state = useCellState(position);
   return (
     <div
       className={cn(
         'select-none',
-        state?.color === 'red' && 'text-player-red-200',
-        state?.color === 'black' && 'text-player-black-100',
+        state?.player === 'red' && 'text-player-red-200',
+        state?.player === 'black' && 'text-player-black-100',
         state?.piece === 'peon' && 'text-7xl',
         state?.piece === 'dame' && 'text-5xl',
       )}

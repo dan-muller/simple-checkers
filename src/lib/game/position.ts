@@ -59,6 +59,10 @@ export const isValidRow = (row: unknown): row is Row => typeof row === 'string' 
 // Check if a column is valid
 export const isValidCol = (col: unknown): col is Column => typeof col === 'string' && cols.includes(col as never);
 
+// Check if a position is valid
+export const isValidPosition = (position: unknown): position is Position =>
+  typeof position === 'string' && positions.includes(position as never);
+
 // Convert a column and row or column index and row index to a position
 export const toPosition = (
   ...[col, row]: [col: number, row: number] | [col: Column, row: Row] | [{ col: Column; row: Row }]

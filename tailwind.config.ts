@@ -7,15 +7,15 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    colors: {
-      'tile-light': 'hsl(var(--color-tile-light) / <alpha-value>)',
-      'tile-dark': 'hsl(var(--color-tile-dark) / <alpha-value>)',
-      'player-red-100': 'hsl(var(--color-player-red-100) / <alpha-value>)',
-      'player-red-200': 'hsl(var(--color-player-red-200) / <alpha-value>)',
-      'player-black-100': 'hsl(var(--color-player-black-100) / <alpha-value>)',
-      'player-black-200': 'hsl(var(--color-player-black-200) / <alpha-value>)',
-    },
     extend: {
+      colors: {
+        'tile-light': 'hsl(var(--color-tile-light) / <alpha-value>)',
+        'tile-dark': 'hsl(var(--color-tile-dark) / <alpha-value>)',
+        'player-red-100': 'hsl(var(--color-player-red-100) / <alpha-value>)',
+        'player-red-200': 'hsl(var(--color-player-red-200) / <alpha-value>)',
+        'player-black-100': 'hsl(var(--color-player-black-100) / <alpha-value>)',
+        'player-black-200': 'hsl(var(--color-player-black-200) / <alpha-value>)',
+      },
       backgroundImage: {
         'board-img': 'var(--board-bg-url)',
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
