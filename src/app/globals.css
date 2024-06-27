@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+
+    --color-player-red-100: 0deg 84% 60%;
+    --color-player-red-200: 0deg 84% 40%;
+
+    --color-player-black-100: 0deg 0% 20%;
+    --color-player-black-200: 0deg 0% 0%;
+
+    --color-tile-dark: 0deg 0% 65%;
+    --color-tile-light: 0deg 0% 85%;
+
+    .theme-dark {
+        --color-tile-dark: 0deg 5% 15%;
+        --color-tile-light: 0deg 5% 35%;
+    }
+
+    .theme-oceanic {
+        --color-tile-dark: 203.39deg 100% 23.14%;
+        --color-tile-light: 206.38deg 48.74% 53.33%;
+    }
+
+    .theme-berry {
+        --color-tile-dark: 240deg 25.88% 33.33%;
+        --color-tile-light: 268.85deg 59.09% 82.75%;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
+}
+
+body {
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+            to bottom,
+            transparent,
+            rgb(var(--background-end-rgb))
+    ) rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+}
