@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@paralleldrive/cuid2": "latest",
+    "@vercel/speed-insights": "^1.0.12",
     "babel-plugin-react-compiler": "latest",
     "class-variance-authority": "^0.7.0",
     "clsx": "latest",
